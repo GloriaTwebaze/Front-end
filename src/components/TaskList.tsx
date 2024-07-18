@@ -1,18 +1,23 @@
-import TaskItem from "./TaskItem";
+import React from 'react';
+import { Task } from '../types';
+import TaskItem from './TaskItem';
 
-const TaskList = ({tasks, onEdit, onDelete}:any)=>{
-    return(
-        <div>
-            {tasks.map((task:any)=>(
-                <TaskItem
-                key={task.id}
-                task={task}
-                onEdit={onEdit}
-                onDelete={onDelete}
-                />
-            ))}
-        </div>
-    )
+interface TaskListProps {
+    tasks: Task[];
+    onEdit: (task: Task) => void;
+    onDelete: (taskId: number) => void;
 }
 
-export default TaskList
+const TaskList: React.FC<TaskListProps> = ({ tasks, onEdit, onDelete }) => {
+    return (
+        <ul>
+            {tasks.map((task) => (
+                <li key={task.id}>
+                    <TaskItem task={task} onEdit={onEdit} onDelete={onDelete} />
+                </li>
+            ))}
+        </ul>
+    );
+};
+
+export default TaskList;

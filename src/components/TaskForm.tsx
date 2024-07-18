@@ -1,35 +1,58 @@
-import React,{useState, useEffect} from "react";
+import React, { useState, useEffect } from 'react';
+import { Task } from '../types';
 
-const TaskForm = ({task, onSave}:any)=>{
-    const[title,setTitle]= useState("")
-    const [description, setDescription] = useState('')
+interface TaskFormProps {
+    task: Task | null;
+    onSave: (task: Task) => Promise<void>;
+}
 
-    useEffect(()=>{
-        if(task){
-            setTitle(task.title);
-            setDescription(task.description)
+const TaskForm: React.FC<TaskFormProps> = ({ task, onSave }) => {
+    const [taskname, setTaskname] = useState('');
+    const [description, setDescription] = useState('');
+
+    useEffect(() => {
+        if (task) {
+            setTaskname(task.taskname);
+            setDescription(task.description);
+            console.log('Task loaded in form:', task);
         }
-    },[task]);
+    }, [task]);
 
-    const handleSubmit=(e:any)=>{
-        e.preventDefault()
-        onSave({title, description});
-        setTitle('')
-        setDescription('')
-    }
+    const handleSubmit = async (event: React.FormEvent) => {
+        event.preventDefault();
+        const newTask: Task = {
+            id: task?.id || 0,
+            taskname: taskname, 
+            description: description,
+            date_created: task?.date_created || new Date().toISOString()
+        };
+        console.log('Task being saved:', newTask);
+        await onSave(newTask);
+        setTaskname('');
+        setDescription('');
+    };
 
-    return(
+    return (
         <form onSubmit={handleSubmit}>
             <div>
-                <label htmlFor="">Title:</label>
-                <input type="text" value={title} onChange={(e)=>setTitle(e.target.value)} />
+                <label>Title</label>
+                <input
+                    type="text"
+                    value={taskname}
+                    onChange={(e) => setTaskname(e.target.value)}
+                />
             </div>
             <div>
-                <label htmlFor="">Description:</label>
-                <textarea name="" id="" value={description} onChange={(e)=>setDescription(e.target.value)}></textarea>
+                <label>Description</label>
+                <input
+                    type="text"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                />
             </div>
             <button type="submit">Save</button>
         </form>
-    )
-}
-export default TaskForm
+    );
+};
+
+export default TaskForm;
