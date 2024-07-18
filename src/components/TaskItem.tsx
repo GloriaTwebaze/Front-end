@@ -16,7 +16,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onEdit, onDelete }) => {
             <p>{task.description}</p>
             <p>{new Date(task.date_created).toLocaleString()}</p>
             <button onClick={() => onEdit(task)}>Edit</button>
-            <button onClick={() => onDelete(task.id!)}>Delete</button> {/* Ensure task.id is passed */}
+            <button onClick={() => onDelete(task.id!)}>Delete</button> 
         </div>
     );
 };

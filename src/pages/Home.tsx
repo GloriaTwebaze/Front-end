@@ -58,7 +58,7 @@ const Home: React.FC = () => {
         <div>
             <TaskForm task={currentTask} onSave={handleSave} />
             {loading ? (
-                <p>Loading tasks...</p>
+                <div className="loading">Loading tasks...</div>
             ) : (
                 <TaskList tasks={tasks} onEdit={handleEdit} onDelete={handleDelete} />
             )}
