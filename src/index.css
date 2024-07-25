@@ -31,7 +31,7 @@ form div {
 form label {
   display: block;
   font-weight: bold;
-  margin-bottom: 5px;
+  margin-bottom: 4px;
 }
 
 form input[type="text"] {
